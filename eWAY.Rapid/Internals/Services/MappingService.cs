@@ -21,10 +21,11 @@ namespace eWAY.Rapid.Internals.Services
 {
     internal class MappingService: IMappingService
     {
-        private static readonly MapperConfiguration config;
+        private static readonly MapperConfiguration sconfig;
+        private readonly MapperConfiguration config;
         static MappingService()
         {
-            config = new MapperConfiguration(c => {
+            sconfig = new MapperConfiguration(c => {
                 c.AddProfile<CustomMapProfile>();
                 c.AddProfile<EntitiesMapProfile>();
                 c.AddProfile<RequestMapProfile>();
@@ -34,6 +35,12 @@ namespace eWAY.Rapid.Internals.Services
 
         public MappingService()
         {
+            config = new MapperConfiguration(c => {
+                c.AddProfile<CustomMapProfile>();
+                c.AddProfile<EntitiesMapProfile>();
+                c.AddProfile<RequestMapProfile>();
+                c.AddProfile<ResponseMapProfile>();
+            });
         }
 
         public TDest Map<TSource, TDest>(TSource obj)
